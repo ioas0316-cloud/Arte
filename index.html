@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>엘리시아와 함께 (With Elysia)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-color-dark: #030615;
+      --accent-color: #a78bfa; /* Lilac */
+      --accent-color-secondary: #fde047; /* Starlight Yellow */
+      --border-color: rgba(167, 139, 250, 0.3);
+      --text-primary: #e5e7eb;
+      --text-secondary: #9ca3af;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(-2px); }
+      50% { transform: translateY(2px); }
+    }
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 0 20px 5px var(--accent-color-glow, rgba(220, 200, 255, 0.4)); }
+      50% { box-shadow: 0 0 35px 15px var(--accent-color-glow, rgba(220, 200, 255, 0.7)); }
+    }
+    @keyframes shy-sway {
+      0%, 100% { transform: translateX(-4px) rotate(-1deg); }
+      50% { transform: translateX(4px) rotate(1deg); }
+    }
+    @keyframes soft-pulse-glow {
+      0%, 100% { 
+        transform: scale(1);
+        box-shadow: 0 0 25px 8px rgba(167, 139, 250, 0.3), 0 0 40px 15px rgba(190, 170, 255, 0.2);
+        opacity: 0.7;
+      }
+      50% { 
+        transform: scale(1.05);
+        box-shadow: 0 0 45px 15px rgba(167, 139, 250, 0.5), 0 0 70px 25px rgba(190, 170, 255, 0.3);
+        opacity: 1;
+      }
+    }
+    @keyframes slow-spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes particle-up {
+      from { transform: translateY(0) scale(1); opacity: 0.8; }
+      to { transform: translateY(-200px) scale(0); opacity: 0; }
+    }
+    @keyframes ken-burns {
+      0% {
+          transform: scale(1.05) translate(1%, -1%);
+          opacity: 0.8;
+      }
+      50% {
+          transform: scale(1.15) translate(-1%, 1%);
+          opacity: 1;
+      }
+      100% {
+          transform: scale(1.05) translate(1%, -1%);
+          opacity: 0.8;
+      }
+    }
+    @keyframes icon-fade-in {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fade-in-down {
+      from { opacity: 0; transform: translateY(-15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in-down {
+      animation: fade-in-down 0.5s ease-out forwards;
+    }
+    @keyframes fade-in {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .animate-fade-in {
+        animation: fade-in 1.5s ease-in-out forwards;
+    }
+     @keyframes trace-path {
+      from { stroke-dashoffset: 600; } /* A large enough number to cover the path length */
+      to { stroke-dashoffset: 0; }
+    }
+    @keyframes twinkle {
+        0%, 100% { opacity: 0.6; transform: scale(0.9); }
+        50% { opacity: 1; transform: scale(1.1); }
+    }
+    @keyframes blush-fade-in {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    @keyframes critical-pulse {
+      0%, 100% { box-shadow: 0 0 8px rgba(239, 68, 68, 0.5), inset 0 0 5px rgba(239, 68, 68, 0.4); border-color: #f87171; }
+      50% { box-shadow: 0 0 16px rgba(239, 68, 68, 0.8), inset 0 0 8px rgba(239, 68, 68, 0.6); border-color: #ef4444; }
+    }
+    @keyframes scroll-up {
+        from { transform: translateY(100vh); }
+        to { transform: translateY(-100%); }
+    }
+    .animate-scroll-up {
+        animation: scroll-up 20s linear forwards;
+    }
+    @keyframes fade-out-text {
+        from { opacity: 1; }
+        to { opacity: 0; }
+    }
+    .animate-fade-out-text {
+        animation: fade-out-text 0.5s ease-out forwards;
+        display: inline-block;
+    }
+    @keyframes fade-in-text {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    .animate-fade-in-text {
+        animation: fade-in-text 0.5s ease-out forwards;
+        display: inline-block;
+    }
+    .animate-critical-pulse {
+        animation: critical-pulse 2s ease-in-out infinite;
+    }
+    .blush-effect {
+      position: absolute;
+      width: 30%;
+      height: 15%;
+      background: radial-gradient(ellipse at center, rgba(255, 105, 180, 0.4) 0%, rgba(255, 105, 180, 0) 70%);
+      border-radius: 50%;
+      opacity: 0;
+      animation: blush-fade-in 0.8s ease-out forwards;
+      pointer-events: none;
+    }
+    .animate-trace-path {
+      stroke-dasharray: 600; /* Must match or exceed the 'from' value */
+      animation: trace-path 8s linear infinite;
+    }
+    .animate-icon-fade-in {
+      animation: icon-fade-in 0.5s ease-out forwards;
+      opacity: 0;
+    }
+    .animate-particle-up {
+      animation: particle-up linear infinite;
+    }
+    .typing-cursor::after {
+      content: '▋';
+      animation: blink 1s step-end infinite;
+      color: var(--accent-color);
+      opacity: 0.7;
+      margin-left: 2px;
+    }
+    @keyframes blink {
+      from, to { opacity: 1 }
+      50% { opacity: 0 }
+    }
+    .animate-float {
+      animation: float 6s ease-in-out infinite;
+    }
+    .animate-glow {
+      animation: glow 3s ease-in-out infinite;
+    }
+    .animate-shy-sway {
+      animation: shy-sway 5s ease-in-out infinite;
+    }
+    .animate-soft-pulse-glow {
+      animation: soft-pulse-glow 5s ease-in-out infinite;
+    }
+    .animate-slow-spin {
+      animation: slow-spin 90s linear infinite;
+    }
+    .animate-slow-spin-reverse {
+      animation: slow-spin 120s linear infinite reverse;
+    }
+    
+    .tree-glow {
+      filter: drop-shadow(0 0 3px rgba(220, 200, 255, 0.6)) drop-shadow(0 0 8px rgba(253, 224, 71, 0.4));
+    }
+
+    .immersive-background {
+      background-size: cover;
+      background-position: center;
+      width: 100%;
+      height: 100%;
+      animation: ken-burns 90s ease-in-out infinite;
+    }
+
+    body {
+      perspective: 1500px;
+      background-color: var(--bg-color-dark);
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(0,0,0,0) 50%, rgba(3, 6, 21, 0.8) 100%);
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    /* Item Rarity Styles */
+    .rarity-common { border-color: #9ca3af; color: #d1d5db; } /* gray-400 / gray-300 */
+    .rarity-uncommon { border-color: #4ade80; color: #86efac; } /* green-400 / green-300 */
+    .rarity-rare { border-color: #60a5fa; color: #93c5fd; } /* blue-400 / blue-300 */
+    .rarity-epic { border-color: #a855f7; color: #c084fc; } /* purple-500 / purple-300 */
+    .rarity-legendary { border-color: #f97316; color: #fdba74; } /* orange-500 / orange-300 */
+    .rarity-mythic { 
+      border-color: var(--accent-color-secondary); 
+      color: #fef08a; /* yellow-200 */
+      box-shadow: 0 0 8px var(--accent-color-secondary), inset 0 0 5px rgba(253, 224, 71, 0.5);
+      animation: twinkle 2s ease-in-out infinite;
+    }
+    
+    /* Custom Scrollbar */
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 8px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background-color: var(--accent-color);
+      border-radius: 20px;
+      border: 2px solid transparent;
+      background-clip: content-box;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background-color: #c4b5fd; /* Lighter accent color */
+    }
+  </style>
+<script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://esm.sh/react-dom@^19.1.1/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.15.0",
+    "react/": "https://esm.sh/react@^19.1.1/",
+    "react": "https://esm.sh/react@^19.1.1"
+  }
+}
+</script>
+</head>
+<body class="bg-gray-900 overflow-hidden">
+  <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
