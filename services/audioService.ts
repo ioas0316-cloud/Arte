@@ -5,24 +5,24 @@ interface SoundMap {
 }
 
 const BGM_PLAYLIST: string[] = [
-  '/Dance in the Moonlight.mp3',
-  '/Dancing in the moonlight(ending).mp3',
+  'https://cdn.jsdelivr.net/gh/k-next/sounds@main/bgm/menu.mp3', // Main/Menu BGM
+  'https://cdn.jsdelivr.net/gh/k-next/sounds@main/bgm/ending.mp3', // Ending BGM
 ];
 
 const SFX_TRACKS: SoundMap = {
-  click: 'https://cdn.pixabay.com/download/audio/2022/03/10/audio_89c6395e37.mp3',
-  message: 'https://cdn.pixabay.com/download/audio/2022/11/19/audio_b859942a3a.mp3',
-  openPanel: 'https://cdn.pixabay.com/download/audio/2022/03/24/audio_32345607e1.mp3',
-  closePanel: 'https://cdn.pixabay.com/download/audio/2022/03/24/audio_32345607e1.mp3',
+  click: 'https://cdn.jsdelivr.net/gh/k-next/sounds@main/ui/click.mp3',
+  message: 'https://cdn.jsdelivr.net/gh/k-next/sounds@main/ui/message.mp3',
+  openPanel: 'https://cdn.jsdelivr.net/gh/k-next/sounds@main/ui/open.mp3',
+  closePanel: 'https://cdn.jsdelivr.net/gh/k-next/sounds@main/ui/close.mp3',
 };
 
 const AMBIANCE_TRACKS: SoundMap = {
-    lab: 'https://cdn.pixabay.com/download/audio/2023/04/10/audio_845c48b0a9.mp3',
-    ruin: 'https://cdn.pixabay.com/download/audio/2022/09/21/audio_18215d2a83.mp3',
-    valley: 'https://cdn.pixabay.com/download/audio/2022/11/21/audio_a210759052.mp3',
-    mountain: 'https://cdn.pixabay.com/download/audio/2023/07/11/audio_248464f1e5.mp3',
-    clouds: 'https://cdn.pixabay.com/download/audio/2021/08/04/audio_a73788559a.mp3',
-    castle: 'https://cdn.pixabay.com/download/audio/2023/10/05/audio_2e25f82d1c.mp3',
+    lab: 'https://cdn.jsdelivr.net/gh/k-next/sounds@main/ambience/lab.mp3',
+    ruin: 'https://cdn.jsdelivr.net/gh/k-next/sounds@main/ambience/ruins.mp3',
+    valley: 'https://cdn.jsdelivr.net/gh/k-next/sounds@main/ambience/valley.mp3',
+    mountain: 'https://cdn.jsdelivr.net/gh/k-next/sounds@main/ambience/mountain.mp3',
+    clouds: 'https://cdn.jsdelivr.net/gh/k-next/sounds@main/ambience/wind.mp3',
+    castle: 'https://cdn.jsdelivr.net/gh/k-next/sounds@main/ambience/castle.mp3',
 };
 
 class AudioService {
@@ -71,7 +71,7 @@ class AudioService {
     const currentSrc = this.bgm.src.substring(this.bgm.src.lastIndexOf('/'));
     const newSrcBasename = newTrackSrc.substring(newTrackSrc.lastIndexOf('/'));
     
-    if (this.currentBgmKey === trackKey && currentSrc === newSrcBasename && !this.bgm.paused) {
+    if (this.currentBgmKey === trackKey && this.bgm.src.includes(newSrcBasename) && !this.bgm.paused) {
         return; // The correct music is already playing
     }
     
@@ -95,15 +95,19 @@ class AudioService {
   }
 
   playAmbiance(trackKey: string) {
-    if (!this.isInitialized || this.currentAmbianceKey === trackKey || !this.ambiance) {
-      return;
+    if (!this.isInitialized || !this.ambiance) {
+        return;
     }
-
+    
     const trackSrc = AMBIANCE_TRACKS[trackKey];
     if (!trackSrc) {
         this.stopAmbiance();
         return;
     };
+    
+    if (this.currentAmbianceKey === trackKey && !this.ambiance.paused) {
+        return;
+    }
     
     this.currentAmbianceKey = trackKey;
     
@@ -174,7 +178,9 @@ class AudioService {
             if (audioEl) {
                 audioEl.volume = 0;
                 audioEl.pause();
-                audioEl.src = ''; // Clear src to stop loading
+                if (audioEl.src) {
+                    audioEl.removeAttribute('src'); // Clear src to stop loading
+                }
             }
             resolve();
             return;
@@ -189,7 +195,9 @@ class AudioService {
             } else {
                 audioEl.volume = 0;
                 audioEl.pause();
-                audioEl.src = ''; // Clear src to stop loading
+                if (audioEl.src) {
+                    audioEl.removeAttribute('src'); // Clear src to stop loading
+                }
                 if (intervalRef.id) clearInterval(intervalRef.id);
                 intervalRef.id = null;
                 resolve();

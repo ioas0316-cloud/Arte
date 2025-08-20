@@ -2,7 +2,7 @@
 import React, { useState, useCallback, useEffect, useRef, createContext, useContext, useMemo } from 'react';
 import { GameState, Emotion, Quest, GameMode, AppSettings, PersonalMemory, GeminiModel, MemoryContext, Dream } from './types';
 import { getInitialState, getSystemInstruction, BLUEPRINT_ENDINGS, getParadiseSystemInstruction } from './constants';
-import { getGameUpdate, summarizeJourney, getEndingAnalysis, getParadiseResponse, generateDream, generateCharacterImage } from './services/geminiService';
+import { getGameUpdate, summarizeJourney, getEndingAnalysis, getParadiseResponse, generateDream } from './services/geminiService';
 import { audioService } from './services/audioService';
 import * as storage from './services/storageService';
 import * as db from './services/dbService';
@@ -70,7 +70,7 @@ const QuestTracker: React.FC<QuestTrackerProps> = ({ quests }) => {
   if (!activeQuest) return null;
 
   return (
-    <div className="fixed top-4 right-4 z-30 w-full max-w-xs p-4 bg-slate-900/80 backdrop-blur-md rounded-xl border border-[var(--border-color)] shadow-2xl animate-fade-in-down">
+    <div className="fixed top-4 right-4 z-30 w-full max-w-xs p-4 bg-slate-900/95 rounded-xl border border-[var(--border-color)] shadow-2xl animate-fade-in-down">
       <h3 className="text-xs font-semibold text-yellow-400 uppercase tracking-wider mb-2 flex items-center gap-2">
         <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
         <span>{t('questTrackerTitle')}</span>
@@ -112,7 +112,7 @@ function App() {
   const [error, setError] = useState<string | null>(null);
   const [userName, setUserName] = useState<string | null>(null);
   const [gameMode, setGameMode] = useState<GameMode>('menu');
-  const [settings, setSettings] = useState<AppSettings>({ selectedModel: 'gemini-2.5-flash' });
+  const [settings, setSettings] = useState<AppSettings>({ selectedModel: 'gemini-2.5-flash', thoughtsOpacity: 0.8 });
 
   // UI and Modal State
   const [characterImage, setCharacterImage] = useState<string | null>(ELYSIA_BASE_IMAGE);
@@ -275,16 +275,7 @@ function App() {
       setGameState(newGameState);
       setHistory(newHistory);
       setChatLog(prev => [...prev, { author: 'elysia', content: newGameState.storyText }]);
-
-      try {
-        const newImage = await generateCharacterImage(newGameState.imagePrompt);
-        setCharacterImage(newImage);
-        autoSaveGame(newGameState, newImage, newHistory, name);
-      } catch (imgError) {
-        console.error("Initial image generation failed:", imgError);
-        setCharacterImage(ELYSIA_BASE_IMAGE);
-        autoSaveGame(newGameState, ELYSIA_BASE_IMAGE, newHistory, name);
-      }
+      autoSaveGame(newGameState, ELYSIA_BASE_IMAGE, newHistory, name);
 
     } catch (e) {
       setError(e instanceof Error ? e.message : 'An unknown error occurred.');
@@ -344,15 +335,7 @@ function App() {
       setHistory(newHistory);
       setChatLog(prev => [...prev, { author: 'elysia', content: newGameState.storyText }]);
       audioService.playSfx('message');
-      
-      try {
-        const newImage = await generateCharacterImage(newGameState.imagePrompt);
-        setCharacterImage(newImage);
-        autoSaveGame(newGameState, newImage, newHistory, userName);
-      } catch (imgError) {
-        console.error("Character image generation failed:", imgError);
-        autoSaveGame(newGameState, characterImage, newHistory, userName);
-      }
+      autoSaveGame(newGameState, characterImage, newHistory, userName);
       setUserInput(''); // Clear on success
     } catch (e) {
       setError(e instanceof Error ? e.message : 'An unknown error occurred.');
@@ -691,19 +674,19 @@ function App() {
             <CharacterDisplay image={characterImage} emotion={gameState.emotion} isLoading={isLoading && !characterImage} onResize={handlePanelResize} size={characterPanelSize} />
              {isThoughtsOverlayVisible && (
               <div className="absolute top-4 left-4 right-4 z-20">
-                <CharacterThoughts thoughts={gameState.characterThoughts} />
+                <CharacterThoughts thoughts={gameState.characterThoughts} thoughtsOpacity={settings.thoughtsOpacity} />
               </div>
             )}
           </div>
-          <div className={`flex-grow bg-black bg-opacity-75 rounded-2xl shadow-2xl p-4 sm:p-6 flex flex-col backdrop-blur-md border border-[var(--border-color)] overflow-hidden transition-all duration-500 ease-in-out ${panelSizeClasses[characterPanelSize].story}`}>
+          <div className={`flex-grow bg-black/90 rounded-2xl shadow-2xl p-4 sm:p-6 flex flex-col border border-[var(--border-color)] overflow-hidden transition-all duration-500 ease-in-out ${panelSizeClasses[characterPanelSize].story}`}>
             {isLoading && !isNameModalOpen && (
                 <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center rounded-2xl z-20">
                   <LoadingSpinner />
                   <p className="mt-4 text-[var(--accent-color)] animate-pulse">{t('elysiaThinking')}</p>
                 </div>
             )}
+            <InfoDock activePanel={activePanel} onShowPanel={handlePanelToggle} />
             <div className="flex-grow flex flex-col gap-4 overflow-y-auto custom-scrollbar pr-2">
-              <InfoDock activePanel={activePanel} onShowPanel={handlePanelToggle} />
               <StoryPanel chatLog={chatLog} isFastForward={isFastForward} />
             </div>
             <div className="flex-shrink-0 mt-auto pt-4 relative">
@@ -712,7 +695,7 @@ function App() {
               
               {isSuggestionsPanelVisible && (
                 <div className="absolute bottom-full w-full mb-2 z-10 animate-fade-in-up">
-                    <div className="p-4 bg-slate-900/80 backdrop-blur-md rounded-xl border border-[var(--border-color)]">
+                    <div className="p-4 bg-slate-900/95 rounded-xl border border-[var(--border-color)]">
                         <SuggestionChips choices={gameState.choices} onActionSelect={handleAction} isLoading={isLoading || isNameModalOpen} />
                     </div>
                 </div>

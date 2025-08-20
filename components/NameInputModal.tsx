@@ -46,7 +46,7 @@ const NameInputModal: React.FC<NameInputModalProps> = ({ mode, currentName, onCl
   const confirmDescription = t('nameModalConfirmDesc', { name: name });
 
   return (
-    <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 animate-fade-in">
+    <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-50 animate-fade-in">
       <div className="w-full max-w-md text-center bg-gray-900/80 rounded-2xl shadow-2xl p-8 border border-purple-400/30">
         
         {isConfirming ? (

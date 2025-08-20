@@ -1,3 +1,4 @@
+
 import { GoogleGenAI, Type, Content } from "@google/genai";
 import { GameState, ItemRarity, ItemType, EquipmentSlot, Quest, GeminiModel, AppSettings, PersonalMemory, Dream } from '../types';
 import { getDreamSystemInstruction } from '../constants';
@@ -379,29 +380,6 @@ Based on the memories and conversation above, generate your dream.
             : "Failed to generate a dream. Please try again shortly.";
         throw new Error(errorMessage);
     }
-}
-
-export async function generateCharacterImage(prompt: string): Promise<string> {
-  try {
-    const fullPrompt = `${prompt}, full body portrait, elegant, ethereal, masterpiece, best quality, high resolution`;
-
-    const imageResponse = await ai.models.generateImages({
-        model: 'imagen-3.0-generate-002',
-        prompt: fullPrompt,
-        config: {
-          numberOfImages: 1,
-          outputMimeType: 'image/png',
-          aspectRatio: '3:4', // Portrait aspect ratio
-        },
-    });
-
-    const base64ImageBytes = imageResponse.generatedImages[0].image.imageBytes;
-    return `data:image/png;base64,${base64ImageBytes}`;
-
-  } catch (error) {
-      console.error("Error generating character image:", error);
-      throw new Error("Failed to generate character image.");
-  }
 }
 
 export async function summarizeJourney(

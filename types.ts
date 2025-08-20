@@ -147,6 +147,7 @@ export type GeminiModel = 'gemini-2.5-flash' | 'gemini-pro';
 
 export interface AppSettings {
     selectedModel: GeminiModel;
+    thoughtsOpacity: number;
 }
 
 export interface MemoryContext {

@@ -1,5 +1,4 @@
 
-
 import React from 'react';
 import { useLanguage } from '../localization';
 
@@ -18,7 +17,7 @@ const InfoPanelModal: React.FC<InfoPanelModalProps> = ({ isOpen, onClose, title,
 
   return (
     <div 
-      className="fixed inset-0 bg-black/80 backdrop-blur-lg flex items-center justify-center z-50 animate-fade-in"
+      className="fixed inset-0 bg-black/95 flex items-center justify-center z-50 animate-fade-in"
       onClick={onClose}
     >
       <div 

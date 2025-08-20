@@ -75,7 +75,7 @@ const CharacterDisplay: React.FC<CharacterDisplayProps> = ({ image, emotion, isL
   const isExpanded = size === 'expanded';
 
   return (
-    <div className="relative w-full h-full rounded-2xl bg-black/20 backdrop-blur-md flex items-center justify-center p-4 border border-[var(--border-color)] shadow-lg shadow-purple-500/10">
+    <div className="relative w-full h-full rounded-2xl bg-black/40 flex items-center justify-center p-4 border border-[var(--border-color)] shadow-lg shadow-purple-500/10">
       <ParticleBackground emotion={emotion} />
       <div className="absolute top-2 right-2 z-30">
         <Tooltip text={isExpanded ? t('tooltipShrink') : t('tooltipExpand')}>

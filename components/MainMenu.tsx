@@ -75,7 +75,7 @@ const MainMenu: React.FC<MainMenuProps> = ({
     <div ref={menuRef} className="fixed top-4 left-4 z-40">
       <div className="relative">
         {isOpen && (
-           <div className="absolute top-full left-0 mt-3 w-60 bg-slate-900/80 backdrop-blur-md rounded-xl border border-[var(--border-color)] p-2 shadow-2xl animate-fade-in-down">
+           <div className="absolute top-full left-0 mt-3 w-60 bg-slate-900/95 p-2 shadow-2xl animate-fade-in-down rounded-xl border border-[var(--border-color)]">
               <div className="space-y-1">
                 <MenuButton onClick={onToggleThoughts}>
                    {isThoughtsVisible ? (
@@ -143,7 +143,7 @@ const MainMenu: React.FC<MainMenuProps> = ({
           <button 
             onClick={() => setIsOpen(v => !v)} 
             aria-label="Open game menu"
-            className="p-3 bg-slate-900/60 backdrop-blur-md rounded-full text-white hover:bg-purple-600/50 transition-colors duration-300 border border-[var(--border-color)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-purple-400"
+            className="p-3 bg-slate-900/80 rounded-full text-white hover:bg-purple-600/50 transition-colors duration-300 border border-[var(--border-color)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-purple-400"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />

@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useLanguage } from '../localization';
 
@@ -36,13 +37,13 @@ const GameMenu: React.FC<GameMenuProps> = ({ onNewGame, onContinue, onLoadGame, 
       {/* Background */}
       <div className="absolute inset-0 z-0 overflow-hidden">
           <div className="immersive-background"></div>
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+          <div className="absolute inset-0 bg-black/80"></div>
       </div>
 
       <div className="absolute top-4 right-4 z-20">
         <button 
           onClick={toggleLanguage} 
-          className="px-4 py-2 text-lg bg-black/30 backdrop-blur-md rounded-lg border border-purple-400/30 text-white hover:bg-purple-500/30 transition-colors"
+          className="px-4 py-2 text-lg bg-black/50 rounded-lg border border-purple-400/30 text-white hover:bg-purple-500/30 transition-colors"
         >
           {lang === 'ko' ? 'English' : '한국어'}
         </button>
@@ -120,7 +121,7 @@ const GameMenu: React.FC<GameMenuProps> = ({ onNewGame, onContinue, onLoadGame, 
                     )}
                 </svg>
             </div>
-            <h1 className="text-4xl sm:text-5xl font-bold text-purple-200" style={{ textShadow: '0 0 20px rgba(192, 132, 252, 0.9), 0 0 8px rgba(220, 200, 255, 0.7)' }}>
+            <h1 className="text-4xl sm:text-5xl font-bold text-purple-200">
               {t('gameTitle')}
             </h1>
             <p className="text-lg text-slate-300 mt-2">{t('gameSubtitle')}</p>
@@ -129,7 +130,7 @@ const GameMenu: React.FC<GameMenuProps> = ({ onNewGame, onContinue, onLoadGame, 
 
           {/* Right Side: Menu */}
           <div className="w-full max-w-sm md:w-auto md:min-w-[320px]">
-             <div className="w-full bg-black/40 rounded-2xl shadow-2xl p-8 backdrop-blur-sm border border-purple-400/20">
+             <div className="w-full bg-black/75 rounded-2xl shadow-2xl p-8 border border-purple-400/20">
                   <div className="space-y-4">
                     {isParadiseUnlocked && (
                         <MenuButton onClick={onEnterParadise} className="bg-yellow-500 bg-opacity-80 border border-yellow-300 text-gray-900 hover:bg-yellow-400 hover:shadow-lg hover:shadow-yellow-400/30 focus:ring-yellow-300">

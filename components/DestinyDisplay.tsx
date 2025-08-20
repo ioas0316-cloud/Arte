@@ -61,9 +61,9 @@ const DestinyDisplay: React.FC<DestinyDisplayProps> = ({
     
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-indigo-900 to-black text-white font-sans p-4 sm:p-6 md:p-8 flex flex-col items-center justify-center animate-fade-in">
-      <main className="w-full max-w-3xl text-center bg-black/30 rounded-2xl shadow-2xl p-8 backdrop-blur-md border border-purple-400/30">
+      <main className="w-full max-w-3xl text-center bg-black/70 rounded-2xl shadow-2xl p-8 border border-purple-400/30">
         <h1 className="text-2xl font-bold text-purple-300 tracking-wider mb-2">{t('destinyFruit')}</h1>
-        <h2 className="text-4xl sm:text-5xl font-extrabold text-white mb-6" style={{ textShadow: '0 0 15px rgba(200, 180, 255, 0.8)' }}>
+        <h2 className="text-4xl sm:text-5xl font-extrabold text-white mb-6">
           {destiny}
         </h2>
         

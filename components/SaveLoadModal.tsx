@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import * as storage from '../services/storageService';
 import { useLanguage } from '../localization';
@@ -91,11 +92,11 @@ const SaveLoadModal: React.FC<SaveLoadModalProps> = ({ isOpen, onClose, onSave, 
 
     return (
         <div 
-            className="fixed inset-0 bg-black/80 backdrop-blur-lg flex items-center justify-center z-50 animate-fade-in"
+            className="fixed inset-0 bg-black/90 flex items-center justify-center z-50 animate-fade-in"
             onClick={onClose}
         >
             <div 
-                className="w-full max-w-2xl bg-gray-900/80 rounded-2xl shadow-2xl flex flex-col border border-purple-400/30"
+                className="w-full max-w-lg bg-gray-900/80 rounded-2xl shadow-2xl flex flex-col border border-purple-400/30"
                 onClick={e => e.stopPropagation()}
             >
                 <header className="flex items-center justify-between p-4 border-b border-purple-400/20 flex-shrink-0">
@@ -110,27 +111,11 @@ const SaveLoadModal: React.FC<SaveLoadModalProps> = ({ isOpen, onClose, onSave, 
                         </svg>
                     </button>
                 </header>
-                <div className="p-4 sm:p-6 overflow-y-auto custom-scrollbar max-h-[80vh]">
-                    <div className="space-y-4">
-                        {autosaveSlot && (
-                            <SaveSlot 
-                                summary={autosaveSlot}
-                                onSave={onSave}
-                                onLoad={onLoad}
-                                isAutosave
-                            />
-                        )}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {manualSlots.map(slot => (
-                            <SaveSlot 
-                                key={slot.slotId}
-                                summary={slot}
-                                onSave={onSave}
-                                onLoad={onLoad}
-                            />
-                        ))}
-                        </div>
-                    </div>
+                <div className="p-6 space-y-4 overflow-y-auto custom-scrollbar max-h-[70vh]">
+                    {autosaveSlot && <SaveSlot summary={autosaveSlot} onSave={onSave} onLoad={onLoad} isAutosave />}
+                    {manualSlots.map(slot => (
+                        <SaveSlot key={slot.slotId} summary={slot} onSave={onSave} onLoad={onLoad} />
+                    ))}
                 </div>
             </div>
         </div>

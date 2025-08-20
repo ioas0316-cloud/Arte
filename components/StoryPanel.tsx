@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 
 interface ChatLogEntry {
@@ -44,10 +45,9 @@ const ElysiaMessage: React.FC<{ text: string, isLastMessage: boolean, isFastForw
   }, [text, isLastMessage, isFastForward]);
   
   return (
-    <div className="text-slate-200 text-lg leading-relaxed whitespace-pre-wrap">
+    <div className="text-slate-200 text-base leading-relaxed whitespace-pre-wrap">
       <p 
         className={isTyping ? 'typing-cursor' : ''}
-        style={{ textShadow: '0 2px 8px rgba(0, 0, 0, 0.95)' }}
       >
         {displayedText}
       </p>
@@ -59,8 +59,7 @@ const UserMessage: React.FC<{ text: string }> = ({ text }) => {
     return (
         <div className="flex justify-end">
             <p 
-              className="bg-indigo-800/50 text-indigo-100 rounded-lg rounded-br-none px-4 py-2 text-lg max-w-full sm:max-w-[80%] break-words"
-              style={{ textShadow: '0 1px 4px rgba(0, 0, 0, 0.8)' }}
+              className="bg-indigo-800/50 text-indigo-100 rounded-lg rounded-br-none px-4 py-2 text-base max-w-full sm:max-w-[80%] break-words"
             >
                 {text}
             </p>

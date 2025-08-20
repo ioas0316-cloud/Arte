@@ -3,9 +3,10 @@ import React, { useState, useEffect } from 'react';
 
 interface CharacterThoughtsProps {
   thoughts: string;
+  thoughtsOpacity: number;
 }
 
-const CharacterThoughts: React.FC<CharacterThoughtsProps> = ({ thoughts }) => {
+const CharacterThoughts: React.FC<CharacterThoughtsProps> = ({ thoughts, thoughtsOpacity }) => {
   const [displayedThoughts, setDisplayedThoughts] = useState('');
   const [isTyping, setIsTyping] = useState(false);
 
@@ -37,14 +38,16 @@ const CharacterThoughts: React.FC<CharacterThoughtsProps> = ({ thoughts }) => {
   }
   
   return (
-    <div className="bg-black/70 backdrop-blur-md p-4 rounded-xl shadow-lg border border-purple-400/30 animate-fade-in">
+    <div 
+      className="p-4 rounded-xl shadow-lg border border-purple-400/30 animate-fade-in"
+      style={{ backgroundColor: `rgba(0, 0, 0, ${thoughtsOpacity})` }}
+    >
       <div className="flex items-start gap-3">
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-purple-300 flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
         <p 
-            className={`text-purple-200 italic text-lg leading-relaxed ${isTyping ? 'typing-cursor' : ''}`}
-            style={{ textShadow: '0 2px 6px rgba(0,0,0,0.9), 0 0 12px rgba(192, 132, 252, 0.6)' }}
+            className={`text-purple-200 italic text-base leading-relaxed ${isTyping ? 'typing-cursor' : ''}`}
         >
           "{displayedThoughts}"
         </p>

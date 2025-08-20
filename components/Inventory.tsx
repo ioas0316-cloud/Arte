@@ -83,7 +83,7 @@ const InventoryItem: React.FC<{ item: Item }> = ({ item }) => {
 const Inventory: React.FC<{ inventory: Item[]; gold: number }> = ({ inventory, gold }) => {
   const { t } = useLanguage();
   return (
-    <div className="bg-black/20 backdrop-blur-sm p-4 rounded-lg border border-[var(--border-color)]">
+    <div className="bg-black/60 p-4 rounded-lg border border-[var(--border-color)]">
       <div className="flex justify-between items-center mb-3">
         <h3 className="text-lg font-semibold text-purple-300 flex items-center gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -94,7 +94,7 @@ const Inventory: React.FC<{ inventory: Item[]; gold: number }> = ({ inventory, g
         <div className="flex items-center gap-2 text-yellow-300 text-lg font-bold">
           <span>{gold}</span>
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[var(--accent-color-secondary)]" viewBox="0 0 20 20" fill="currentColor">
-            <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.5 2.5 0 004.998 0V7.15c.22.07.412.164.567.267C15.165 7.9 16 8.9 16 10c0 1.1-.835 2.1-1.433 2.582-.155.103-.346.196-.567.267v1.698a2.5 2.5 0 00-4.998 0v-1.698c-.22-.07-.412-.164-.567-.267C4.835 12.1 4 11.1 4 10c0-1.1.835-2.1 1.433-2.582zM10 12a2 2 0 100-4 2 2 0 000 4z" />
+            <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.5 2.5 0 004.998 0V7.15c.22.07.412.164.567.267C15.165 7.9 16 8.9 16 10c0 1.1-.835 2.1-1.433 2.582-.155.103-.346.196-.567.267v1.698a2.5 2.5 0 00-4.998 0v-1.698c-.22-.07-.412.164-.567-.267C4.835 12.1 4 11.1 4 10c0-1.1.835-2.1 1.433-2.582zM10 12a2 2 0 100-4 2 2 0 000 4z" />
             <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm0 2a10 10 0 100-20 10 10 0 000 20z" clipRule="evenodd" />
           </svg>
         </div>
